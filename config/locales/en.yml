@@ -6,3 +6,16 @@ en:
       activity_group_ids: "Groups for activity report"
       activity_user_ids: "Users for activity report"
       report_user_ids: "Report receivers"
+    mailer:
+      daily:
+        subject: "Daily activity report for %{date}"
+      weekly:
+        subject: "Weekly activity report from %{from} to %{to}"
+      monthly:
+        subject: "Monthly activity report from %{from} to %{to}"
+      total_hours: "Total hours"
+      total_issues_count: "Total issues count"
+      user: "Assignee"
+      hours: "hours"
+      issues_count: "issues count"
+      issue: "Issue #"

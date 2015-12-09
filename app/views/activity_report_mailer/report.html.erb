@@ -1,0 +1,46 @@
+<strong><%= t('activity_report.mailer.total_hours') %>:</strong> <%= @total_hours %>
+<strong><%= t('activity_report.mailer.total_issues_count') %>:</strong> <%= @total_issues_count %>
+<hr>
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th><%= t 'activity_report.mailer.user' %></th>
+      <th><%= t 'activity_report.mailer.hours' %></th>
+      <th><%= t 'activity_report.mailer.issues_count' %></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @time_entries.group_by(&:user).each do |user, time_entries| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= time_entries.map(&:hours).sum %></td>
+        <td><%= time_entries.map(&:issue_id).uniq.size %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<hr>
+
+<% @time_entries.group_by(&:user).each do |user, time_entries| %>
+  <h1><%= user.name %></h1>
+  <strong><%= t('activity_report.mailer.total_hours') %>:</strong> <%= time_entries.map(&:hours).sum %>
+  <strong><%= t('activity_report.mailer.total_issues_count') %>:</strong> <%= time_entries.map(&:issue_id).uniq.size %>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+      <tr>
+        <th><%= t 'activity_report.mailer.issue' %></th>
+        <th><%= t 'activity_report.mailer.hours' %></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% time_entries.group_by(&:issue).each do |issue, entries| %>
+        <tr>
+          <td><%= link_to issue.id, issue_url(issue) %></td>
+          <td><%= entries.map(&:hours).sum %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

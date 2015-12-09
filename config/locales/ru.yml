@@ -6,3 +6,16 @@ ru:
       activity_group_ids: "Группы для отчёта"
       activity_user_ids: "Исполнители для отчёта"
       report_user_ids: "Получатели отчёта"
+    mailer:
+      daily:
+        subject: "Ежедневный отчёт по затраченному времени за %{date}"
+      weekly:
+        subject: "Еженедельный отчёт по затраченному времени с %{from} по %{to}"
+      monthly:
+        subject: "Ежемесячный отчёт по затраченному времени с %{from} по %{to}"
+      total_hours: "Всего часов"
+      total_issues_count: "Всего задач"
+      user: "Исполнитель"
+      hours: " часов"
+      issues_count: "задач"
+      issue: "Задача №"
