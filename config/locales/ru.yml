@@ -1,0 +1,8 @@
+ru:
+  activity_report:
+    tab_title: Activity report
+    settings:
+      with_subprojects: Включая подпроекты
+      activity_group_ids: "Группы для отчёта"
+      activity_user_ids: "Исполнители для отчёта"
+      report_user_ids: "Получатели отчёта"

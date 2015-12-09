@@ -1,3 +1,8 @@
-# English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  activity_report:
+    tab_title: Activity report
+    settings:
+      with_subprojects: With sub-projects
+      activity_group_ids: "Groups for activity report"
+      activity_user_ids: "Users for activity report"
+      report_user_ids: "Report receivers"

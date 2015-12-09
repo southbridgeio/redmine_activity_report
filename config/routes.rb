@@ -1,2 +1,1 @@
-# Plugin's routes
-# See: http://guides.rubyonrails.org/routing.html
+put 'activity_report/save_settings' => 'activity_report#save_settings'

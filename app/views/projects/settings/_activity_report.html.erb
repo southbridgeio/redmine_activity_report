@@ -1,0 +1,63 @@
+<%= error_messages_for 'activity_report_settings' %>
+
+<% errors = [] %>
+<% errors << l('activity_report.enable_module') unless @project.module_enabled?(:activity_report) %>
+
+<% if errors.empty? %>
+  <%= form_tag(
+        {controller: :activity_report, action: :save_settings, project_id: @project, tab: 'activity_report_settings'},
+        method: :put, class: 'tabular', multipart: true, id: 'activity_report_settings') do %>
+    <div class="box">
+      <p>
+        <%= check_box_tag 'activity_report_settings[with_subprojects]', '1',
+                          @project.activity_report_settings.try(:[], 'with_subprojects').present?,
+                          id: 'activity_report_settings_with_subprojects'
+        %>
+        <%= label_tag 'activity_report_settings[with_subprojects]', t('activity_report.settings.with_subprojects') %>
+
+      </p>
+
+    </div>
+
+    <% if @project.groups.present? %>
+      <fieldset class="box tabular" id="project_trackers"><legend><%= t 'activity_report.settings.activity_group_ids' %></legend>
+        <% @project.groups.each do |group| %>
+          <label class="floating">
+            <%= check_box_tag 'activity_report_settings[activity_group_ids][]', group.id, @project.activity_group_ids.try(:include?, group.id.to_s), :id => nil %>
+            <%= group %>
+          </label>
+        <% end %>
+        <%= hidden_field_tag 'activity_report_settings[activity_group_ids][]', '' %>
+      </fieldset>
+    <% end %>
+    <% if @project.users.present? %>
+      <fieldset class="box tabular" id="project_trackers"><legend><%= t 'activity_report.settings.activity_user_ids' %></legend>
+        <% @project.users.each do |user| %>
+          <label class="floating">
+            <%= check_box_tag 'activity_report_settings[activity_user_ids][]', user.id, @project.activity_user_ids.try(:include?, user.id.to_s), :id => nil %>
+            <%= user %>
+          </label>
+        <% end %>
+        <%= hidden_field_tag 'activity_report_settings[activity_user_ids][]', '' %>
+      </fieldset>
+
+      <fieldset class="box tabular" id="project_trackers"><legend><%= t 'activity_report.settings.report_user_ids' %></legend>
+        <% @project.users.each do |user| %>
+          <label class="floating">
+            <%= check_box_tag 'activity_report_settings[report_user_ids][]', user.id, @project.report_user_ids.try(:include?, user.id.to_s), :id => nil %>
+            <%= user %>
+          </label>
+        <% end %>
+        <%= hidden_field_tag 'activity_report_settings[report_user_ids][]', '' %>
+      </fieldset>
+    <% end %>
+
+    <div style="clear:both;"></div>
+
+    <%= submit_tag l(:button_save) %>
+
+  <% end %>
+
+<% else %>
+  <p class="nodata"><%= errors.join('<br/>').html_safe %></p>
+<% end %>
