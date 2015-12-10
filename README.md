@@ -1,12 +1,14 @@
 # Redmine activity report plugin
 
-Плагин разработан [Centos-admin.ru](http://centos-admin.ru/).
+*[Русская версия документации](README.ru.md)*
 
-Плагин предназначен для отправки ежедневных, еженедельных и ежемесячных отчётов о затраченном времени по проектам.
+Plugin developed by [Centos-admin.ru](http://centos-admin.ru/)..
 
-## Установка и настройка плагина
+The plugin is designed to send daily, weekly and monthly reports on the elapsed time on the project.
 
-После установки плагина необходимо запустить миграции для базы данных:
+## Plugin Setup
+
+After install plugin, run it database migrations:
 
 ```
 bundle exec rake redmine:plugins:migrate
@@ -14,13 +16,13 @@ bundle exec rake redmine:plugins:migrate
 
 ## CRON
 
-Для добавления ежедневной задачи в CRON:
+Add regular tasks to CRON:
 
 ```
 bundle exec whenever -i redmine_activity_report -f plugins/redmine_activity_report/config/schedule.rb
 ```
 
-Для очистки CRON:
+Clear CRON:
 
 ```
 bundle exec whenever -c redmine_activity_report -f plugins/redmine_activity_report/config/schedule.rb
