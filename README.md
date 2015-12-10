@@ -8,7 +8,7 @@ The plugin is designed to send daily, weekly and monthly reports on the elapsed 
 
 ## Plugin Setup
 
-After install plugin, run it database migrations:
+Install the plugin and perform database migration:
 
 ```
 bundle exec rake redmine:plugins:migrate
@@ -22,7 +22,7 @@ Add regular tasks to CRON:
 bundle exec whenever -i redmine_activity_report -f plugins/redmine_activity_report/config/schedule.rb
 ```
 
-Clear CRON:
+Perform this to remove tasks from CRON:
 
 ```
 bundle exec whenever -c redmine_activity_report -f plugins/redmine_activity_report/config/schedule.rb
