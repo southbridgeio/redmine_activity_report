@@ -2,7 +2,7 @@
 
 *[Русская версия документации](README.ru.md)*
 
-Plugin developed by [Centos-admin.ru](http://centos-admin.ru/)..
+Plugin developed by [Centos-admin.ru](http://centos-admin.ru/).
 
 The plugin is designed to send daily, weekly and monthly reports on the elapsed time on the project.
 
