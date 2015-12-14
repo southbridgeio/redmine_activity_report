@@ -1,44 +1,48 @@
-<strong><%= t('activity_report.mailer.total_hours') %>:</strong> <%= @total_hours %>
-<strong><%= t('activity_report.mailer.total_issues_count') %>:</strong> <%= @total_issues_count %>
-<hr>
-<table border="1" cellpadding="5" cellspacing="0">
+<h1 style="font-size: 20px"><%= @subject %></h1>
+<p>
+  <strong><%= t('activity_report.mailer.total_hours') %>:</strong> <%= number_with_precision @total_hours, precision: 2, separator: '.' %>
+  <strong><%= t('activity_report.mailer.total_issues_count') %>:</strong> <%= @total_issues_count %>
+</p>
+
+<table style="border-collapse: collapse">
   <thead>
     <tr>
-      <th><%= t 'activity_report.mailer.user' %></th>
-      <th><%= t 'activity_report.mailer.hours' %></th>
-      <th><%= t 'activity_report.mailer.issues_count' %></th>
+      <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.user' %></th>
+      <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.hours' %></th>
+      <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.issues_count' %></th>
     </tr>
   </thead>
   <tbody>
 
-    <% @time_entries.group_by(&:user).each do |user, time_entries| %>
+    <% @time_entries.group_by(&:user).sort_by{|u, te| -te.map(&:hours).sum }.each do |user, time_entries| %>
       <tr>
-        <td><%= user.name %></td>
-        <td><%= time_entries.map(&:hours).sum %></td>
-        <td><%= time_entries.map(&:issue_id).uniq.size %></td>
+        <td style="border: 1px solid #ddd; padding: 5px;"><%= user.name %></td>
+        <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision time_entries.map(&:hours).sum, precision: 2, separator: '.' %></td>
+        <td style="border: 1px solid #ddd; padding: 5px;"><%= time_entries.map(&:issue_id).uniq.size %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<hr>
-
-<% @time_entries.group_by(&:user).each do |user, time_entries| %>
-  <h1><%= user.name %></h1>
-  <strong><%= t('activity_report.mailer.total_hours') %>:</strong> <%= time_entries.map(&:hours).sum %>
-  <strong><%= t('activity_report.mailer.total_issues_count') %>:</strong> <%= time_entries.map(&:issue_id).uniq.size %>
-  <table border="1" cellpadding="5" cellspacing="0">
+<br/>
+<% @time_entries.group_by(&:user).sort_by{|u, te| -te.map(&:hours).sum }.each do |user, time_entries| %>
+  <h2 style="font-size: 18px"><%= user.name %></h2>
+  <p>
+    <strong><%= t('activity_report.mailer.total_hours') %>:</strong> <%= number_with_precision time_entries.map(&:hours).sum, precision: 2, separator: '.' %>
+    <strong><%= t('activity_report.mailer.total_issues_count') %>:</strong> <%= time_entries.map(&:issue_id).uniq.size %>
+  </p>
+  <table style="border-collapse: collapse">
     <thead>
       <tr>
-        <th><%= t 'activity_report.mailer.issue' %></th>
-        <th><%= t 'activity_report.mailer.hours' %></th>
+        <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.issue' %></th>
+        <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.hours' %></th>
       </tr>
     </thead>
     <tbody>
 
-      <% time_entries.group_by(&:issue).each do |issue, entries| %>
+      <% time_entries.group_by(&:issue).sort_by{|u, te| -te.map(&:hours).sum }.each do |issue, entries| %>
         <tr>
-          <td><%= link_to issue.id, issue_url(issue) %></td>
-          <td><%= entries.map(&:hours).sum %></td>
+          <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "#{issue.id}: #{issue.subject}", issue_url(issue) %></td>
+          <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision entries.map(&:hours).sum, precision: 2, separator: '.' %></td>
         </tr>
       <% end %>
     </tbody>

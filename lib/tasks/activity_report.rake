@@ -1,5 +1,5 @@
 def send_activity_reports(period)
-  yesterday = 1.day.ago.to_date
+  yesterday = 5.hours.ago.to_date
   interval = if period == 'daily'
                yesterday
              elsif period == 'weekly'
