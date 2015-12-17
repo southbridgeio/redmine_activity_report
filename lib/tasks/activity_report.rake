@@ -8,6 +8,10 @@ def send_activity_reports(period)
                (yesterday.beginning_of_month..yesterday.end_of_month).to_a
              end
 
+  report_data = {
+
+  }
+
   Project.joins(:time_entries).where(time_entries: {spent_on: interval}).uniq.each do |project|
     if project.module_enabled?(:activity_report) and project.active?
       activity_group_ids = project.activity_group_ids
@@ -28,9 +32,20 @@ def send_activity_reports(period)
                     end
 
       report_users.each do |user|
-        ActivityReportMailer.report(period, user, interval, project_ids, all_activity_user_ids).deliver_now
+
+        report_data[user.id] = {} unless report_data[user.id].present?
+
+        report_data[user.id][project.id] = {
+          project_ids: project_ids,
+          activity_user_ids: all_activity_user_ids
+        }
       end
+
     end
+  end
+
+  report_data.each do |user_id, params|
+    ActivityReportMailer.report(period, user_id, interval, params).deliver_now
   end
 end
 
