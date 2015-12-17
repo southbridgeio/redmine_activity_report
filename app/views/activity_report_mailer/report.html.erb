@@ -7,7 +7,8 @@
 </ul>
 <% @data.each do |project_data| %>
   <a name="<%= "project-#{project_data[:project].id}" %>"></a>
-  <h1 style="font-size: 20px; margin-top: 10px"><%= project_data[:project].name %>
+  <h1 style="font-size: 20px; margin-top: 30px; text-decoration: underline"  id="<%= "project-#{project_data[:project].id}" %>">
+    <%= project_data[:project].name %>
   </h1>
   <p>
     <strong><%= t('activity_report.mailer.total_hours') %>:</strong>
