@@ -57,7 +57,7 @@
 
         <% time_entries.group_by(&:issue).sort_by { |u, te| -te.map(&:hours).sum }.each do |issue, entries| %>
           <tr>
-            <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "#{issue.id}: #{issue.subject}", issue_url(issue) %></td>
+            <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{issue.id}: #{issue.subject}", issue_url(issue) %></td>
             <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision entries.map(&:hours).sum, precision: 2, separator: '.' %></td>
             <td style="border: 1px solid #ddd; padding: 5px;"><%= entries.sort_by(&:spent_on).map { |e| format_date(e.spent_on) }.uniq.join(', ') %></td>
           </tr>
