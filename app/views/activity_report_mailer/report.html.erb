@@ -29,7 +29,7 @@
 
       <% project_data[:time_entries].group_by(&:user).sort_by { |u, te| -te.map(&:hours).sum }.each do |user, time_entries| %>
         <tr>
-          <td style="border: 1px solid #ddd; padding: 5px;"><%= user.name %></td>
+          <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to user.name, "#project-#{project_data[:project].id}-user-#{user.id}" %></td>
           <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision time_entries.map(&:hours).sum, precision: 2, separator: '.' %></td>
           <td style="border: 1px solid #ddd; padding: 5px;"><%= time_entries.map(&:issue_id).uniq.size %></td>
         </tr>
@@ -38,7 +38,8 @@
   </table>
   <% project_data[:time_entries].group_by(&:user).sort_by { |u, te| -te.map(&:hours).sum }.each do |user, time_entries| %>
     <br/>
-    <h2 style="font-size: 18px"><%= user.name %></h2>
+    <a name="<%= "project-#{project_data[:project].id}-user-#{user.id}" %>"></a>
+    <h2 style="font-size: 18px" id="<%= "project-#{project_data[:project].id}-user-#{user.id}" %>"><%= user.name %></h2>
     <p>
       <strong><%= t('activity_report.mailer.total_hours') %>:</strong>
       <%= number_with_precision time_entries.map(&:hours).sum, precision: 2, separator: '.' %>
