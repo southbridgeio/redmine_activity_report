@@ -14,6 +14,7 @@ class ActivityReportMailer < ActionMailer::Base
   def report(period, user_id, interval, params)
     I18n.locale = Setting['default_language']
 
+    @period = period
     @user = User.find user_id
     @interval = interval
 
