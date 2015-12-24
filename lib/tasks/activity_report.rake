@@ -12,36 +12,38 @@ def send_activity_reports(period)
 
   }
 
-  Project.joins(:time_entries).where(time_entries: {spent_on: interval}).uniq.each do |project|
-    if project.module_enabled?(:activity_report) and project.active?
-      activity_group_ids = project.activity_group_ids
-      activity_user_ids = project.activity_user_ids
+  projects = Project.active.select do |project|
+    project.module_enabled?(:activity_report)
+  end
 
-      group_users = project.groups.where(id: activity_group_ids).map(&:users).flatten
-      users = project.users.where(id: activity_user_ids)
+  projects.each do |project|
+    activity_group_ids = project.activity_group_ids
+    activity_user_ids = project.activity_user_ids
 
-      all_activity_user_ids = (group_users + users).uniq.map(&:id)
+    group_users = project.groups.where(id: activity_group_ids).map(&:users).flatten
+    users = project.users.where(id: activity_user_ids)
 
-      report_user_ids = project.report_user_ids
-      report_users = project.users.where(id: report_user_ids)
+    all_activity_user_ids = (group_users + users).uniq.map(&:id)
 
-      project_ids = if project.with_subprojects.present?
-                      Project.where(project.project_condition(true)).pluck(:id)
-                    else
-                      [project.id]
-                    end
+    report_user_ids = project.report_user_ids
+    report_users = project.users.where(id: report_user_ids)
 
-      report_users.each do |user|
+    project_ids = if project.with_subprojects.present?
+                    Project.where(project.project_condition(true)).pluck(:id)
+                  else
+                    [project.id]
+                  end
 
-        report_data[user.id] = {} unless report_data[user.id].present?
+    report_users.each do |user|
 
-        report_data[user.id][project.id] = {
-          project_ids: project_ids,
-          activity_user_ids: all_activity_user_ids
-        }
-      end
+      report_data[user.id] = {} unless report_data[user.id].present?
 
+      report_data[user.id][project.id] = {
+        project_ids: project_ids,
+        activity_user_ids: all_activity_user_ids
+      }
     end
+
   end
 
   report_data.each do |user_id, params|
