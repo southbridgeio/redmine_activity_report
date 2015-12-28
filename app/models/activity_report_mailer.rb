@@ -19,7 +19,6 @@ class ActivityReportMailer < ActionMailer::Base
     @interval = interval
 
     @data = params.map do |project_id, options|
-      # binding.pry
       project = Project.find project_id
       project_ids = options[:project_ids]
       activity_user_ids = options[:activity_user_ids]
@@ -33,7 +32,7 @@ class ActivityReportMailer < ActionMailer::Base
         total_hours: total_hours,
         total_issues_count: total_issues_count
       }
-    end.sort_by{|d| d[:project].name}
+    end.select { |d| d[:time_entries].present? }.sort_by { |d| d[:project].name }
 
 
     @subject = if period == 'daily'
@@ -44,7 +43,9 @@ class ActivityReportMailer < ActionMailer::Base
                  t('activity_report.mailer.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last))
                end
 
-    mail to: @user.mail, subject: @subject
+    if @data.present?
+      mail to: @user.mail, subject: @subject
+    end
   end
 
 end
