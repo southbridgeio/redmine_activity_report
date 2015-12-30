@@ -3,7 +3,7 @@ ru:
     tab_title: Activity report
     settings:
       with_subprojects: Включая подпроекты
-      activity_group_ids: "Группы для отчета"
+      activity_group_ids: "Группы исполнителей для отчета"
       activity_user_ids: "Исполнители для отчета"
       report_user_ids: "Получатели отчета"
     mailer:
