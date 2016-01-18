@@ -6,6 +6,9 @@ en:
       activity_group_ids: "Groups for activity report"
       activity_user_ids: "Users for activity report"
       report_user_ids: "Report receivers"
+      alarm_priorities: "Alarm priorities"
+      time_for_reaction: Time for reaction
+      minutes: "min"
     mailer:
       daily:
         subject: "Daily activity report for %{date}"
@@ -19,4 +22,5 @@ en:
       hours: "Hours"
       issues_count: "Issues count"
       issue: "Issue"
+      reaction_time: Reaction time (minutes)
       work_dates: "Work dates"

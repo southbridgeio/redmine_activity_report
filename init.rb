@@ -6,9 +6,13 @@ Redmine::Plugin.register :redmine_activity_report do
   name 'Redmine Activity Report plugin'
   url 'https://github.com/centosadmin/redmine_activity_report'
   description 'This is a plugin for Redmine which generate time reports for projects'
-  version '0.0.9'
+  version '0.1.0'
   author 'Centos-admin.ru'
   author_url 'http://centos-admin.ru'
+
+  settings(partial: 'activity_report/settings',
+           default: { 'time_for_reaction' => 15,
+                      'alarm_priority_ids' => Issue.ids.last(2).map(&:to_s)})
 
   project_module :activity_report do
     permission :manage_activity_report_settings, {

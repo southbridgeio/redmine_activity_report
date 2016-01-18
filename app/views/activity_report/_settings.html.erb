@@ -1,0 +1,20 @@
+<h4><%= t 'activity_report.settings.alarm_priorities' %></h4>
+
+<% IssuePriority.find_each do |priority| %>
+  <p>
+    <%= label_tag "settings_alarm_priority_ids_#{priority.id}", priority.name %>
+    <%= check_box_tag 'settings[alarm_priority_ids][]', priority.id,
+                      @settings.try(:[], 'alarm_priority_ids').try(:include?, priority.id.to_s),
+                      id: "settings_alarm_priority_ids_#{priority.id}"
+    %>
+  </p>
+<% end %>
+
+<p>
+  <%= label_tag 'settings[time_for_reaction]', t('activity_report.settings.time_for_reaction') %>
+  <%= number_field_tag 'settings[time_for_reaction]',
+                       @settings.try(:[], 'time_for_reaction'),
+                       id: 'settings_time_for_reaction', style: 'width: 40px;'
+  %>
+  <%= t('activity_report.settings.minutes') %>
+</p>

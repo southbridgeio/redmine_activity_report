@@ -6,6 +6,9 @@ ru:
       activity_group_ids: "Группы исполнителей для отчета"
       activity_user_ids: "Исполнители для отчета"
       report_user_ids: "Получатели отчета"
+      alarm_priorities: "Приоритеты срочных задач"
+      time_for_reaction: Время на реагирование
+      minutes: "мин"
     mailer:
       daily:
         subject: "Ежедневный отчет по затраченному времени за %{date}"
@@ -19,4 +22,5 @@ ru:
       hours: "Часов"
       issues_count: "Задач"
       issue: "Задача"
+      reaction_time: Время реакции (мин)
       work_dates: "Даты работы"
