@@ -1,4 +1,5 @@
 require 'redmine'
+require_dependency 'activity_report'
 require_dependency 'activity_report/patches/project_patch'
 require_dependency 'activity_report/patches/projects_helper_patch'
 
@@ -6,7 +7,7 @@ Redmine::Plugin.register :redmine_activity_report do
   name 'Redmine Activity Report plugin'
   url 'https://github.com/centosadmin/redmine_activity_report'
   description 'This is a plugin for Redmine which generate time reports for projects'
-  version '0.1.0'
+  version '0.2.0'
   author 'Centos-admin.ru'
   author_url 'http://centos-admin.ru'
 
