@@ -20,7 +20,6 @@
         </tr>
       </thead>
       <tbody>
-
         <% project_data[:overdue_alarm_issues].each do |issue, reaction_time| %>
           <tr>
             <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{issue.id}: #{issue.subject}", issue_url(issue) %></td>
@@ -70,30 +69,56 @@
       <strong><%= t('activity_report.mailer.total_issues_count') %>:</strong>
       <%= time_entries.map(&:issue_id).uniq.size %>
     </p>
-    <table style="border-collapse: collapse">
-      <thead>
-        <tr>
-          <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.issue' %></th>
-          <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.hours' %></th>
-          <% unless @period == 'daily' %>
-            <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.work_dates' %></th>
-          <% end %>
-        </tr>
-      </thead>
-      <tbody>
 
-        <% time_entries.group_by(&:issue).sort_by { |u, te| -te.map(&:hours).sum }.each do |issue, entries| %>
-          <% if issue.present? %>
+    <table style="border-collapse: collapse">
+
+      <% if @period == 'daily' %>
+
+        <!--DAILY REPORT-->
+
+        <thead>
+          <tr>
+            <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.issue' %></th>
+            <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.hours' %></th>
+            <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'field_created_on' %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% time_entries.each do |entry| %>
             <tr>
-              <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{issue.id}: #{issue.subject}", issue_url(issue) %></td>
-              <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision entries.map(&:hours).sum, precision: 2, separator: '.' %></td>
-              <% unless @period == 'daily' %>
-                <td style="border: 1px solid #ddd; padding: 5px;"><%= entries.sort_by(&:spent_on).map { |e| format_date(e.spent_on) }.uniq.join(', ') %></td>
-              <% end %>
+              <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{entry.issue_id}: #{entry.issue.try(:subject)}", issue_url(entry.issue_id) %></td>
+              <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision entry.hours, precision: 2, separator: '.' %></td>
+              <td style="border: 1px solid #ddd; padding: 5px;"><%= format_time entry.created_on, false %></td>
             </tr>
-           <% end %>
-        <% end %>
-      </tbody>
+          <% end %>
+        </tbody>
+
+      <% else %>
+
+        <!--WEEKLY OR MONTHLY REPORT-->
+
+        <thead>
+          <tr>
+            <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.issue' %></th>
+            <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.hours' %></th>
+            <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.work_dates' %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% time_entries.group_by(&:issue).sort_by { |u, te| -te.map(&:hours).sum }.each do |issue, entries| %>
+            <% if issue.present? %>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{issue.id}: #{issue.subject}", issue_url(issue) %></td>
+                <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision entries.map(&:hours).sum, precision: 2, separator: '.' %></td>
+                <td style="border: 1px solid #ddd; padding: 5px;"><%= entries.sort_by(&:spent_on).map { |e| format_date(e.spent_on) }.uniq.join(', ') %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+
+      <% end %>
+
     </table>
+
   <% end %>
 <% end %>
