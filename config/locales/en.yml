@@ -9,6 +9,8 @@ en:
       alarm_priorities: "Alarm priorities"
       time_for_reaction: Time for reaction
       minutes: "min"
+      separate_report: "Send a separate report on trackers"
+      separate_report_description: It is convenient to use when you need to generate separate reports on specified trackers
     mailer:
       daily:
         subject: "Daily activity report for %{date}"
@@ -16,6 +18,13 @@ en:
         subject: "Weekly activity report from %{from} to %{to}"
       monthly:
         subject: "Monthly activity report from %{from} to %{to}"
+      tracker:
+        daily:
+          subject: "Daily activity report for %{date} for tracker %{tracker_name}"
+        weekly:
+          subject: "Weekly activity report from %{from} to %{to} for tracker %{tracker_name}"
+        monthly:
+          subject: "Monthly activity report from %{from} to %{to} for tracker %{tracker_name}"
       total_hours: "Total hours"
       total_issues_count: "Total issues count"
       user: "Assignee"

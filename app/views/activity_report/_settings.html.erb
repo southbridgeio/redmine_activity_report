@@ -18,3 +18,16 @@
   %>
   <%= t('activity_report.settings.minutes') %>
 </p>
+<br>
+<h4><%= t 'activity_report.settings.separate_report' %></h4>
+<p><%= t 'activity_report.settings.separate_report_description' %></p>
+
+<% Tracker.find_each do |tracker| %>
+  <p>
+    <%= label_tag "settings_separate_tracker_ids_#{tracker.id}", tracker.name %>
+    <%= check_box_tag 'settings[separate_tracker_ids][]', tracker.id,
+                      @settings.try(:[], 'separate_tracker_ids').try(:include?, tracker.id.to_s),
+                      id: "settings_separate_tracker_ids_#{tracker.id}"
+    %>
+  </p>
+<% end %>

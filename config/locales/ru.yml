@@ -9,6 +9,8 @@ ru:
       alarm_priorities: "Приоритеты срочных задач"
       time_for_reaction: Время на реагирование
       minutes: "мин"
+      separate_report: "Отправлять отдельный отчет по трекерам"
+      separate_report_description: Удобно использовать, когда вам требуется формировать отдельные отчеты по заданным трекерам
     mailer:
       daily:
         subject: "Ежедневный отчет по затраченному времени за %{date}"
@@ -16,6 +18,13 @@ ru:
         subject: "Еженедельный отчет по затраченному времени с %{from} по %{to}"
       monthly:
         subject: "Ежемесячный отчет по затраченному времени с %{from} по %{to}"
+      tracker:
+        daily:
+          subject: "Ежедневный отчет по затраченному времени за %{date} для треккера %{tracker_name}"
+        weekly:
+          subject: "Еженедельный отчет по затраченному времени с %{from} по %{to} для треккера %{tracker_name}"
+        monthly:
+          subject: "Ежемесячный отчет по затраченному времени с %{from} по %{to} для треккера %{tracker_name}"
       total_hours: "Всего часов"
       total_issues_count: "Всего задач"
       user: "Исполнитель"

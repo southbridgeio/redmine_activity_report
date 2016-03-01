@@ -49,6 +49,13 @@ module ActivityReport
 
     report_data.each do |user_id, params|
       ActivityReportMailer.report(period, user_id, interval, params).deliver_now
+      if Setting.plugin_redmine_activity_report['separate_tracker_ids'].present? and
+        Setting.plugin_redmine_activity_report['separate_tracker_ids'].is_a?(Array)
+
+        Setting.plugin_redmine_activity_report['separate_tracker_ids'].each do |tracker_id|
+          ActivityReportMailer.tracker_report(period, user_id, interval, params, tracker_id).deliver_now
+        end
+      end
     end
   end
 
