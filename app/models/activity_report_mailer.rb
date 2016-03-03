@@ -14,16 +14,15 @@ class ActivityReportMailer < ActionMailer::Base
   def report(period, user_id, interval, params)
     data_prepare(interval, params, period, user_id)
 
-
-    @subject = if period == 'daily'
-                 t('activity_report.mailer.daily.subject', date: format_date(@interval))
-               elsif period == 'weekly'
-                 t('activity_report.mailer.weekly.subject', from: format_date(@interval.first), to: format_date(@interval.last))
-               elsif period == 'monthly'
-                 t('activity_report.mailer.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last))
-               end
-
     if @data.present?
+      @subject = if period == 'daily'
+                   t('activity_report.mailer.daily.subject', date: format_date(@interval))
+                 elsif period == 'weekly'
+                   t('activity_report.mailer.weekly.subject', from: format_date(@interval.first), to: format_date(@interval.last))
+                 elsif period == 'monthly'
+                   t('activity_report.mailer.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last))
+                 end
+
       mail to: @user.mail, subject: @subject
     end
   end
@@ -32,17 +31,17 @@ class ActivityReportMailer < ActionMailer::Base
   def tracker_report(period, user_id, interval, params, tracker_id)
     data_prepare(interval, params, period, user_id, tracker_id)
 
-    @tracker = Tracker.find(tracker_id)
-
-    @subject = if period == 'daily'
-                 t('activity_report.mailer.tracker.daily.subject', date: format_date(@interval), tracker_name: @tracker.name)
-               elsif period == 'weekly'
-                 t('activity_report.mailer.tracker.weekly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
-               elsif period == 'monthly'
-                 t('activity_report.mailer.tracker.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
-               end
-
     if @data.present?
+      @tracker = Tracker.find(tracker_id)
+
+      @subject = if period == 'daily'
+                   t('activity_report.mailer.tracker.daily.subject', date: format_date(@interval), tracker_name: @tracker.name)
+                 elsif period == 'weekly'
+                   t('activity_report.mailer.tracker.weekly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+                 elsif period == 'monthly'
+                   t('activity_report.mailer.tracker.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+                 end
+
       mail to: @user.mail, subject: @subject, template_name: 'report'
     end
   end
@@ -58,7 +57,14 @@ class ActivityReportMailer < ActionMailer::Base
       project           = Project.find project_id
       project_ids       = options[:project_ids]
       activity_user_ids = options[:activity_user_ids]
-      time_entries      = TimeEntry.where(project_id: project_ids, user_id: activity_user_ids, spent_on: interval).includes(:user, :issue)
+      time_entries      = if tracker_id.present?
+                            TimeEntry.includes(:user, :issue).
+                              where(project_id: project_ids, user_id: activity_user_ids, spent_on: interval,
+                                    issues:     { tracker_id: tracker_id })
+                          else
+                            TimeEntry.includes(:user, :issue).
+                              where(project_id: project_ids, user_id: activity_user_ids, spent_on: interval)
+                          end
 
       alarm_issues = Issue.where(project_id:  project_ids, created_on: interval,
                                  priority_id: Setting.plugin_redmine_activity_report['alarm_priority_ids']).includes(:journals)
