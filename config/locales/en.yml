@@ -20,11 +20,14 @@ en:
         subject: "Monthly activity report from %{from} to %{to}"
       tracker:
         daily:
-          subject: "Daily activity report for %{date} for tracker %{tracker_name}"
+          subject: "Daily activity report for %{date} (%{tracker_name})"
+          title: "Daily activity report for %{date} for tracker \"%{tracker_name}\""
         weekly:
-          subject: "Weekly activity report from %{from} to %{to} for tracker %{tracker_name}"
+          subject: "Weekly activity report from %{from} to %{to} (%{tracker_name})"
+          title: "Weekly activity report from %{from} to %{to} for tracker \"%{tracker_name}\""
         monthly:
-          subject: "Monthly activity report from %{from} to %{to} for tracker %{tracker_name}"
+          subject: "Monthly activity report from %{from} to %{to} (%{tracker_name})"
+          title: "Monthly activity report from %{from} to %{to} for tracker \"%{tracker_name}\""
       total_hours: "Total hours"
       total_issues_count: "Total issues count"
       user: "Assignee"

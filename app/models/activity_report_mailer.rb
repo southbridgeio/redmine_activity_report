@@ -42,7 +42,16 @@ class ActivityReportMailer < ActionMailer::Base
                    t('activity_report.mailer.tracker.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
                  end
 
-      mail to: @user.mail, subject: @subject, template_name: 'report'
+
+      @title = if period == 'daily'
+                   t('activity_report.mailer.tracker.daily.title', date: format_date(@interval), tracker_name: @tracker.name)
+                 elsif period == 'weekly'
+                   t('activity_report.mailer.tracker.weekly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+                 elsif period == 'monthly'
+                   t('activity_report.mailer.tracker.monthly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+                 end
+
+      mail to: @user.mail, subject: @subject.gsub(' для трекера', ''), template_name: 'report'
     end
   end
 
