@@ -44,12 +44,12 @@ class ActivityReportMailer < ActionMailer::Base
 
 
       @title = if period == 'daily'
-                   t('activity_report.mailer.tracker.daily.title', date: format_date(@interval), tracker_name: @tracker.name)
-                 elsif period == 'weekly'
-                   t('activity_report.mailer.tracker.weekly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
-                 elsif period == 'monthly'
-                   t('activity_report.mailer.tracker.monthly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
-                 end
+                 t('activity_report.mailer.tracker.daily.title', date: format_date(@interval), tracker_name: @tracker.name)
+               elsif period == 'weekly'
+                 t('activity_report.mailer.tracker.weekly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+               elsif period == 'monthly'
+                 t('activity_report.mailer.tracker.monthly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+               end
 
       mail to: @user.mail, subject: @subject.gsub(' для трекера', ''), template_name: 'report'
     end
@@ -75,7 +75,8 @@ class ActivityReportMailer < ActionMailer::Base
                               where(project_id: project_ids, user_id: activity_user_ids, spent_on: interval)
                           end
 
-      alarm_issues = Issue.where(project_id:  project_ids, created_on: interval,
+      alarm_issues = Issue.where(project_id:  project_ids,
+                                 created_on: (interval.first.beginning_of_day..interval.last.end_of_day),
                                  priority_id: Setting.plugin_redmine_activity_report['alarm_priority_ids']).includes(:journals)
 
       alarm_issues = alarm_issues.where(tracker_id: tracker_id) if tracker_id.present?
@@ -86,7 +87,7 @@ class ActivityReportMailer < ActionMailer::Base
         created_on               = issue.created_on
         first_activity           = issue.journals.where(user_id: activity_user_ids).first
         reaction_time_in_seconds = first_activity.present? ? (first_activity.created_on - created_on) : (Time.now - created_on)
-        [issue, (reaction_time_in_seconds / 60)]
+        [issue, (reaction_time_in_seconds / 60).round]
       end.select { |i, rt| rt > time_for_reaction }.sort_by { |i, rt| -rt }
 
       total_hours        = time_entries.map(&:hours).sum
