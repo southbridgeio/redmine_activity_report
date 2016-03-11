@@ -75,8 +75,15 @@ class ActivityReportMailer < ActionMailer::Base
                               where(project_id: project_ids, user_id: activity_user_ids, spent_on: interval)
                           end
 
+      created_on_interval = if interval.is_a?(Array)
+                              interval.first.beginning_of_day..interval.last.end_of_day
+                            else
+                              interval
+                            end
+
+
       alarm_issues = Issue.where(project_id:  project_ids,
-                                 created_on: (interval.first.beginning_of_day..interval.last.end_of_day),
+                                 created_on: created_on_interval,
                                  priority_id: Setting.plugin_redmine_activity_report['alarm_priority_ids']).includes(:journals)
 
       alarm_issues = alarm_issues.where(tracker_id: tracker_id) if tracker_id.present?
