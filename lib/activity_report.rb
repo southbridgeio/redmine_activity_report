@@ -1,6 +1,6 @@
 module ActivityReport
   def self.send_activity_reports(period)
-    yesterday = 5.hours.ago.to_date
+    yesterday = 12.hours.ago.to_date
     interval = if period == 'daily'
                  yesterday
                elsif period == 'weekly'

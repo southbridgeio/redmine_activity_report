@@ -8,7 +8,7 @@
 <% @data.each do |project_data| %>
   <a name="<%= "project-#{project_data[:project].id}" %>"></a>
   <h1 style="font-size: 20px; margin-top: 30px; text-decoration: underline" id="<%= "project-#{project_data[:project].id}" %>">
-    <%= project_name = project_data[:project].name %>
+    <%= project_data[:project].name %>
   </h1>
 
   <% if project_data[:overdue_alarm_issues].present? %>
@@ -23,7 +23,7 @@
       <tbody>
         <% project_data[:overdue_alarm_issues].each do |issue, reaction_time| %>
           <tr>
-            <td style="border: 1px solid #ddd; padding: 5px;"><%= project_name %></td>
+            <td style="border: 1px solid #ddd; padding: 5px;"><%= issue.project.try(:name) %></td>
             <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{issue.id}: #{issue.subject}", issue_url(issue) %></td>
             <td style="border: 1px solid #ddd; padding: 5px;"><%= reaction_time %></td>
           </tr>
@@ -43,7 +43,6 @@
     <table style="border-collapse: collapse">
       <thead>
         <tr>
-          <th style="border: 1px solid #ddd; padding: 5px; width: 200px"><%= t 'field_project' %></th>
           <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.user' %></th>
           <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.hours' %></th>
           <th style="border: 1px solid #ddd; padding: 5px;"><%= t 'activity_report.mailer.issues_count' %></th>
@@ -53,7 +52,6 @@
 
         <% project_data[:time_entries].group_by(&:user).sort_by { |u, te| -te.map(&:hours).sum }.each do |user, time_entries| %>
           <tr>
-            <td style="border: 1px solid #ddd; padding: 5px;"><%= project_name %></td>
             <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to user.name, "#project-#{project_data[:project].id}-user-#{user.id}" %></td>
             <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision time_entries.map(&:hours).sum, precision: 2, separator: '.' %></td>
             <td style="border: 1px solid #ddd; padding: 5px;"><%= time_entries.map(&:issue_id).uniq.size %></td>
@@ -91,7 +89,7 @@
         <tbody>
           <% time_entries.each do |entry| %>
             <tr>
-              <td style="border: 1px solid #ddd; padding: 5px;"><%= project_name %></td>
+              <td style="border: 1px solid #ddd; padding: 5px;"><%= entry.issue.try(:project).try(:name) %></td>
               <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{entry.issue_id}: #{entry.issue.try(:subject)}", issue_url(entry.issue_id) %></td>
               <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision entry.hours, precision: 2, separator: '.' %></td>
               <td style="border: 1px solid #ddd; padding: 5px;"><%= format_time entry.created_on, false %></td>
@@ -115,7 +113,7 @@
           <% time_entries.group_by(&:issue).sort_by { |u, te| -te.map(&:hours).sum }.each do |issue, entries| %>
             <% if issue.present? %>
               <tr>
-                <td style="border: 1px solid #ddd; padding: 5px;"><%= project_name %></td>
+                <td style="border: 1px solid #ddd; padding: 5px;"><%= issue.try(:project).try(:name) %></td>
                 <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{issue.id}: #{issue.subject}", issue_url(issue) %></td>
                 <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision entries.map(&:hours).sum, precision: 2, separator: '.' %></td>
                 <td style="border: 1px solid #ddd; padding: 5px;"><%= entries.sort_by(&:spent_on).map { |e| format_date(e.spent_on) }.uniq.join(', ') %></td>
