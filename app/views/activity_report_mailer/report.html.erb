@@ -1,4 +1,4 @@
-<h1 style="font-size: 20px"><%= @title || @subject %></h1>
+<h1 id="top" style="font-size: 20px"><%= @title || @subject %></h1>
 
 <ul>
   <% @data.each do |project_data| %>
@@ -30,6 +30,7 @@
         <% end %>
       </tbody>
     </table>
+    <p><%= link_to "Наверх", "#top" %></p>
   <% end %>
 
   <p>
