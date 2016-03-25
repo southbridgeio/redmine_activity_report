@@ -1,4 +1,5 @@
-<h1 id="top" style="font-size: 20px"><%= @title || @subject %></h1>
+<h1 style="font-size: 20px"><%= @title || @subject %></h1>
+<a name="top"></a>
 
 <ul>
   <% @data.each do |project_data| %>
@@ -125,7 +126,7 @@
       <% end %>
 
     </table>
-
+    <p><%= link_to "#{ t 'activity_report.mailer.up_to' } #{project_data[:project].name}", "#project-#{project_data[:project].id}"%></p>
   <% end %>
 
   <p><%= link_to (t 'activity_report.mailer.up_link'), "#top" %></p>
