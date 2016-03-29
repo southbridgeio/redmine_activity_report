@@ -126,8 +126,8 @@
       <% end %>
 
     </table>
-    <p><%= link_to "#{ t 'activity_report.mailer.up_to' } #{project_data[:project].name}", "#project-#{project_data[:project].id}"%></p>
+    <%= link_to "#{ t 'activity_report.mailer.up_to' } #{project_data[:project].name}", "#project-#{project_data[:project].id}"%>
   <% end %>
 
-  <p><%= link_to (t 'activity_report.mailer.up_link'), "#top" %></p>
+   | <%= link_to (t 'activity_report.mailer.up_link'), "#top" %>
 <% end %>
