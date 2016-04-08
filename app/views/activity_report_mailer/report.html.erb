@@ -64,6 +64,7 @@
 
   <% project_data[:time_entries].group_by(&:user).sort_by { |u, te| -te.map(&:hours).sum }.each do |user, time_entries| %>
     <br/>
+    <br/>
     <a name="<%= "project-#{project_data[:project].id}-user-#{user.id}" %>"></a>
     <h2 style="font-size: 18px" id="<%= "project-#{project_data[:project].id}-user-#{user.id}" %>"><%= user.name %></h2>
     <p>
@@ -126,6 +127,7 @@
       <% end %>
 
     </table>
+    <br/>
     <%= link_to "#{ t 'activity_report.mailer.up_to' } #{project_data[:project].name}", "#project-#{project_data[:project].id}"%>
   <% end %>
 
