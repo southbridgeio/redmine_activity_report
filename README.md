@@ -10,7 +10,7 @@ Please help us make this plugin better telling us of any [issues](https://github
 
 ## Requirements
 
-'whenever' gem should be installed either locally or systemwide.
+`whenever` gem should be installed either locally or systemwide.
 
 Add the following line to the Gemfile.local file:
 
