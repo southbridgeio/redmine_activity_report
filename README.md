@@ -6,6 +6,8 @@ Plugin developed by [Centos-admin.ru](http://centos-admin.ru/).
 
 The plugin is designed to send daily, weekly and monthly reports on the elapsed time on the project.
 
+Please help us make this plugin better telling us of any [issues](https://github.com/centosadmin/redmine_activity_report/issues) you'll face using it. We are ready to answer all your questions regarding this plugin.
+
 ## Plugin Setup
 
 Install the plugin and perform database migration:
