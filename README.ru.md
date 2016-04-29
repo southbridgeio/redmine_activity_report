@@ -28,3 +28,13 @@ bundle exec whenever -i redmine_activity_report -f plugins/redmine_activity_repo
 bundle exec whenever -c redmine_activity_report -f plugins/redmine_activity_report/config/schedule.rb
 ```
 
+Для успешного выполнения этих команд, должент быть установлен гем `whenever`.
+
+Добавьте следующую строку в `Gemfile.local`
+```ruby
+gem 'whenever'
+```
+либо выполните команду
+```
+gem install whenever
+```
