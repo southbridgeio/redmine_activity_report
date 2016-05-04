@@ -47,6 +47,8 @@ bundle exec whenever -c redmine_activity_report -f plugins/redmine_activity_repo
 ```
 ## Plugin use
 
+The plugin counts time spent on projects, counting the time that assignee puts in tickets.
+
 Tick the priority statuses in the `Alarm priorities` section to include them in report.
 Tick trackers in the `Send a separate report on trackers` section if you'd like them to be added to the report.
 
