@@ -19,6 +19,7 @@ en:
       monthly:
         subject: "Monthly activity report from %{from} to %{to}"
       tracker:
+        gsub: ' for tracker'
         daily:
           subject: "Daily activity report for %{date} (%{tracker_name})"
           title: "Daily activity report for %{date} for tracker \"%{tracker_name}\""

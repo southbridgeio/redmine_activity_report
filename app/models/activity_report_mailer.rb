@@ -51,7 +51,7 @@ class ActivityReportMailer < ActionMailer::Base
                  t('activity_report.mailer.tracker.monthly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
                end
 
-      mail to: @user.mail, subject: @subject.gsub(' для трекера', ''), template_name: 'report'
+      mail to: @user.mail, subject: @subject.gsub(t('activity_report.mailer.tracker.gsub'), ''), template_name: 'report'
     end
   end
 
