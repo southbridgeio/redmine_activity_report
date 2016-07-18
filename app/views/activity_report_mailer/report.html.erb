@@ -89,7 +89,7 @@
           </tr>
         </thead>
         <tbody>
-          <% time_entries.each do |entry| %>
+          <% time_entries.sort_by{|e| e.created_on }.each do |entry| %>
             <tr>
               <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to entry.issue.project.try(:name), project_url(entry.issue.project.identifier) %></td>
               <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{entry.issue_id}: #{entry.issue.try(:subject)}", issue_url(entry.issue_id) %></td>
