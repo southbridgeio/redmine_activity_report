@@ -23,6 +23,10 @@ class ActivityReportMailer < ActionMailer::Base
                    t('activity_report.mailer.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last))
                  end
 
+      @title = if period == 'weekly'
+                 t('activity_report.mailer.weekly.title', from: format_date(@interval.first), to: format_date(@interval.last))
+               end
+
       mail to: @user.mail, subject: @subject
     end
   end
