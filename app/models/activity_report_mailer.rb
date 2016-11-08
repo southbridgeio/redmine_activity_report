@@ -18,7 +18,7 @@ class ActivityReportMailer < ActionMailer::Base
       @subject = if period == 'daily'
                    t('activity_report.mailer.daily.subject', date: format_date(@interval))
                  elsif period == 'weekly'
-                   t('activity_report.mailer.weekly.subject', number: Time.now.strftime('%W'))
+                   t('activity_report.mailer.weekly.subject', number: interval.first.strftime('%W'))
                  elsif period == 'monthly'
                    t('activity_report.mailer.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last))
                  end
