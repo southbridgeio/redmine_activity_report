@@ -9,7 +9,7 @@ Redmine::Plugin.register :redmine_activity_report do
   description 'This is a plugin for Redmine which generate time reports for projects'
   version '1.2.9'
   author 'Centos-admin.ru'
-  author_url 'http://centos-admin.ru'
+  author_url 'https://centos-admin.ru'
 
   settings(partial: 'activity_report/settings',
            default: { 'time_for_reaction' => 15,
