@@ -15,7 +15,8 @@ en:
       daily:
         subject: "Daily activity report for %{date}"
       weekly:
-        subject: "Weekly activity report №%{number}"
+        subject: "Weekly activity report № %{number}"
+        title: "Weekly activity report from %{from} to %{to}"
       monthly:
         subject: "Monthly activity report from %{from} to %{to}"
       tracker:
