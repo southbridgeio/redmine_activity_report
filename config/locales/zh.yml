@@ -1,0 +1,41 @@
+zh:
+  activity_report:
+    tab_title: 活动报告
+    settings:
+      with_subprojects: 含子项目
+      activity_group_ids: "活动报告接收组"
+      activity_user_ids: "活动报告接收人"
+      report_user_ids: "报告接收人"
+      alarm_priorities: "警告属性"
+      time_for_reaction: 反应时间
+      minutes: "分钟"
+      separate_report: "根据跟踪类型发送独立的活动报告"
+      separate_report_description: 适用于需要正对不同跟踪类型，生成特定活动报告的情况。
+    mailer:
+      daily:
+        subject: "日报 - %{date}"
+      weekly:
+        subject: "周报 - 第№%{number}周"
+      monthly:
+        subject: "月报 - 起止日期：%{from} ~ %{to}"
+      tracker:
+        gsub: '适用跟踪类型'
+        daily:
+          subject: "日报 - %{date} (%{tracker_name})"
+          title: " %{date} 日报，适用于 \"%{tracker_name}\""
+        weekly:
+          subject: "周报 - %{from} ~ %{to} (%{tracker_name})"
+          title: " %{from} ~ %{to} 周报，适用于 \"%{tracker_name}\""
+        monthly:
+          subject: "月报 - %{from} ~ %{to} (%{tracker_name})"
+          title: " %{from} ~ %{to} 月报，适用于 \"%{tracker_name}\""
+      total_hours: "总工时"
+      total_issues_count: "事务数总计"
+      user: "执行人"
+      hours: "工时"
+      issues_count: "事务计数"
+      issue: "事务"
+      reaction_time: 反应时间 (分钟)
+      work_dates: "工作日期"
+      up_link: "Up"
+      up_to: "Up to"
