@@ -31,7 +31,6 @@ class ActivityReportMailer < ActionMailer::Base
     end
   end
 
-
   def tracker_report(period, user_id, interval, params, tracker_id)
     data_prepare(interval, params, period, user_id, tracker_id)
 
@@ -45,7 +44,6 @@ class ActivityReportMailer < ActionMailer::Base
                  elsif period == 'monthly'
                    t('activity_report.mailer.tracker.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
                  end
-
 
       @title = if period == 'daily'
                  t('activity_report.mailer.tracker.daily.title', date: format_date(@interval), tracker_name: @tracker.name)
@@ -71,12 +69,12 @@ class ActivityReportMailer < ActionMailer::Base
       project_ids       = options[:project_ids]
       activity_user_ids = options[:activity_user_ids]
       time_entries      = if tracker_id.present?
-                            TimeEntry.includes(:user, :issue).
-                              where(project_id: project_ids, user_id: activity_user_ids, spent_on: interval,
-                                    issues:     { tracker_id: tracker_id })
+                            TimeEntry.includes(:user, :issue)
+                                     .where(project_id: project_ids, user_id: activity_user_ids, spent_on: interval,
+                                            issues:     { tracker_id: tracker_id })
                           else
-                            TimeEntry.includes(:user, :issue).
-                              where(project_id: project_ids, user_id: activity_user_ids, spent_on: interval)
+                            TimeEntry.includes(:user, :issue)
+                                     .where(project_id: project_ids, user_id: activity_user_ids, spent_on: interval)
                           end
 
       created_on_interval = if interval.is_a?(Array)
@@ -84,7 +82,6 @@ class ActivityReportMailer < ActionMailer::Base
                             else
                               interval
                             end
-
 
       alarm_issues = Issue.where(project_id:  project_ids,
                                  created_on: created_on_interval,
@@ -99,7 +96,7 @@ class ActivityReportMailer < ActionMailer::Base
         first_activity           = issue.journals.where(user_id: activity_user_ids).first
         reaction_time_in_seconds = first_activity.present? ? (first_activity.created_on - created_on) : (Time.now - created_on)
         [issue, (reaction_time_in_seconds / 60).round]
-      end.select { |i, rt| rt > time_for_reaction }.sort_by { |i, rt| -rt }
+      end.select { |_i, rt| rt > time_for_reaction }.sort_by { |_i, rt| -rt }
 
       total_hours        = time_entries.map(&:hours).sum
       total_issues_count = time_entries.map(&:issue_id).uniq.size
@@ -110,7 +107,6 @@ class ActivityReportMailer < ActionMailer::Base
         total_hours:          total_hours,
         total_issues_count:   total_issues_count
       }
-    end.select { |d| d[:time_entries].present? or d[:overdue_alarm_issues].present? }.sort_by { |d| d[:project].name }
+    end.select { |d| d[:time_entries].present? || d[:overdue_alarm_issues].present? }.sort_by { |d| d[:project].name }
   end
-
 end
