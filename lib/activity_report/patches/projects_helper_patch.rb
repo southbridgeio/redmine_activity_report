@@ -33,21 +33,19 @@ module ActivityReport
       end
 
       module InstanceMethods
-
         def project_settings_tabs_with_activity_report_settings
           tabs = project_settings_tabs_without_activity_report_settings
 
-          tabs.push({name: 'activity_report_settings',
-                     action: :manage_activity_report_settings,
-                     partial: 'projects/settings/activity_report',
-                     label: 'activity_report.tab_title'}) if User.current.allowed_to?(:manage_activity_report_settings, @project)
+          if User.current.allowed_to?(:manage_activity_report_settings, @project)
+            tabs.push(name: 'activity_report_settings',
+                      action: :manage_activity_report_settings,
+                      partial: 'projects/settings/activity_report',
+                      label: 'activity_report.tab_title')
+          end
 
           tabs
         end
-
-
       end
-
     end
   end
 end
