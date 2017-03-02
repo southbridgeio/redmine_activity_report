@@ -16,6 +16,7 @@ zh:
         subject: "日报 - %{date}"
       weekly:
         subject: "周报 - 第№%{number}周"
+        title: " %{from} ~ %{to} 周报"
       monthly:
         subject: "月报 - 起止日期：%{from} ~ %{to}"
       tracker:
@@ -37,5 +38,5 @@ zh:
       issue: "事务"
       reaction_time: 反应时间 (分钟)
       work_dates: "工作日期"
-      up_link: "Up"
-      up_to: "Up to"
+      up_link: "向上"
+      up_to: "向上至"
