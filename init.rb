@@ -13,7 +13,7 @@ Redmine::Plugin.register :redmine_activity_report do
 
   settings(partial: 'activity_report/settings',
            default: { 'time_for_reaction' => 15,
-                      'alarm_priority_ids' => Issue.ids.last(2).map(&:to_s) })
+                      'alarm_priority_ids' => [] })
 
   project_module :activity_report do
     permission :manage_activity_report_settings, projects: :settings,
