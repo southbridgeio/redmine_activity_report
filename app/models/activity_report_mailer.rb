@@ -15,17 +15,15 @@ class ActivityReportMailer < ActionMailer::Base
     data_prepare(interval, params, period, user_id)
 
     if @data.present?
-      @subject = if period == 'daily'
-                   t('activity_report.mailer.daily.subject', date: format_date(@interval))
-                 elsif period == 'weekly'
-                   t('activity_report.mailer.weekly.subject', number: interval.first.strftime('%W'))
-                 elsif period == 'monthly'
-                   t('activity_report.mailer.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last))
-                 end
+      @subject = case period
+        when 'daily' ; t('activity_report.mailer.daily.subject', date: format_date(@interval))
+        when 'weekly' ; t('activity_report.mailer.weekly.subject', number: interval.first.strftime('%W'))
+        when 'monthly' ; t('activity_report.mailer.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last))
+      end
 
-      @title = if period == 'weekly'
-                 t('activity_report.mailer.weekly.title', from: format_date(@interval.first), to: format_date(@interval.last))
-               end
+      @title = case period
+        when 'weekly' ; t('activity_report.mailer.weekly.title', from: format_date(@interval.first), to: format_date(@interval.last))
+      end
 
       mail to: @user.mail, subject: @subject
     end
@@ -37,21 +35,17 @@ class ActivityReportMailer < ActionMailer::Base
     if @data.present?
       @tracker = Tracker.find(tracker_id)
 
-      @subject = if period == 'daily'
-                   t('activity_report.mailer.tracker.daily.subject', date: format_date(@interval), tracker_name: @tracker.name)
-                 elsif period == 'weekly'
-                   t('activity_report.mailer.tracker.weekly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
-                 elsif period == 'monthly'
-                   t('activity_report.mailer.tracker.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
-                 end
+      @subject = case period
+        when 'daily' ; t('activity_report.mailer.tracker.daily.subject', date: format_date(@interval), tracker_name: @tracker.name)
+        when 'weekly' ; t('activity_report.mailer.tracker.weekly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+        when 'monthly' ; t('activity_report.mailer.tracker.monthly.subject', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+      end
 
-      @title = if period == 'daily'
-                 t('activity_report.mailer.tracker.daily.title', date: format_date(@interval), tracker_name: @tracker.name)
-               elsif period == 'weekly'
-                 t('activity_report.mailer.tracker.weekly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
-               elsif period == 'monthly'
-                 t('activity_report.mailer.tracker.monthly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
-               end
+      @title = case period
+        when 'daily' ; t('activity_report.mailer.tracker.daily.title', date: format_date(@interval), tracker_name: @tracker.name)
+        when 'weekly' ; t('activity_report.mailer.tracker.weekly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+        when 'monthly' ; t('activity_report.mailer.tracker.monthly.title', from: format_date(@interval.first), to: format_date(@interval.last), tracker_name: @tracker.name)
+      end
 
       mail to: @user.mail, subject: @subject.gsub(t('activity_report.mailer.tracker.gsub'), ''), template_name: 'report'
     end
@@ -96,7 +90,7 @@ class ActivityReportMailer < ActionMailer::Base
         first_activity           = issue.journals.where(user_id: activity_user_ids).first
         reaction_time_in_seconds = first_activity.present? ? (first_activity.created_on - created_on) : (Time.now - created_on)
         [issue, (reaction_time_in_seconds / 60).round]
-      end.select { |_i, rt| rt > time_for_reaction }.sort_by { |_i, rt| -rt }
+      end.select { |_, rt| rt > time_for_reaction }.sort_by { |_, rt| -rt }
 
       total_hours        = time_entries.map(&:hours).sum
       total_issues_count = time_entries.map(&:issue_id).uniq.size
