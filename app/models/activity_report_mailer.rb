@@ -5,7 +5,7 @@ class ActivityReportMailer < ActionMailer::Base
 
   include Redmine::I18n
 
-  default from: "#{Setting.app_title} <#{Setting.mail_from}>"
+  default from: Setting.mail_from
 
   def self.default_url_options
     Mailer.default_url_options
