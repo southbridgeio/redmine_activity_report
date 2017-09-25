@@ -24,8 +24,16 @@
       <tbody>
         <% project_data[:overdue_alarm_issues].each do |issue, reaction_time| %>
           <tr>
-            <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to issue.project.try(:name), project_url(issue.project.identifier) %></td>
-            <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{issue.id}: #{issue.subject}", issue_url(issue) %></td>
+            <td style="border: 1px solid #ddd; padding: 5px;">
+              <% if issue.present? %>
+              <%= link_to issue.project.try(:name), project_url(issue.project.identifier) %>
+              <% end %>
+            </td>
+            <td style="border: 1px solid #ddd; padding: 5px;">
+              <% if issue.present? %>
+              <%= link_to "##{issue.id}: #{issue.subject}", issue_url(issue) %>
+              <% end %>
+            </td>
             <td style="border: 1px solid #ddd; padding: 5px;"><%= reaction_time %></td>
           </tr>
         <% end %>
@@ -91,8 +99,12 @@
         <tbody>
           <% time_entries.sort_by{|e| e.created_on }.each do |entry| %>
             <tr>
-              <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to entry.issue.project.try(:name), project_url(entry.issue.project.identifier) %></td>
-              <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to "##{entry.issue_id}: #{entry.issue.try(:subject)}", issue_url(entry.issue_id) %></td>
+              <td style="border: 1px solid #ddd; padding: 5px;"><%= link_to entry.project.try(:name), project_url(entry.project.identifier) %></td>
+              <td style="border: 1px solid #ddd; padding: 5px;">
+                <% if entry.issue.present? %>
+                <%= link_to "##{entry.issue_id}: #{entry.issue.try(:subject)}", issue_url(entry.issue_id) %>
+                <% end %>
+              </td>
               <td style="border: 1px solid #ddd; padding: 5px;"><%= number_with_precision entry.hours, precision: 2, separator: '.' %></td>
               <td style="border: 1px solid #ddd; padding: 5px;"><%= format_time entry.created_on, false %></td>
             </tr>
