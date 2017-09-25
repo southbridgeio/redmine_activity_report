@@ -2,8 +2,6 @@
 
 *[Русская версия документации](README.ru.md)*
 
-Plugin is developed by [Centos-admin.ru](http://centos-admin.ru/).
-
 The plugin is designed to send reports of the time spent on projects daily, weekly and monthly.
 
 Please help us make this plugin better telling us of any [issues](https://github.com/centosadmin/redmine_activity_report/issues) you'll face using it. We are ready to answer all your questions regarding this plugin.
@@ -45,7 +43,7 @@ Remove regular task from cron:
 ```
 bundle exec whenever -c redmine_activity_report -f plugins/redmine_activity_report/config/schedule.rb
 ```
-## Plugin use
+## Usage
 
 Keep in mind that the plugin only counts the time put in tickets.
 
@@ -55,3 +53,7 @@ Tick trackers in the `Send a separate report on trackers` section if you'd like 
 Tick `With sub-projects` on the `Activity report` tab to receive reports of all the subprojects included in the project.
 `Users for activity report` section contains users that will be included in report.
 `Report receivers` section contains users that will receive reports.
+
+# Author of the Plugin
+
+The plugin is designed by [Southbridge](https://southbridge.io)
