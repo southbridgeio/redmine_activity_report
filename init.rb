@@ -7,7 +7,7 @@ Redmine::Plugin.register :redmine_activity_report do
   name 'Redmine Activity Report plugin'
   url 'https://github.com/centosadmin/redmine_activity_report'
   description 'This is a plugin for Redmine which generate time reports for projects'
-  version '1.2.9'
+  version '1.2.10'
   author 'Southbridge'
   author_url 'https://github.com/centosadmin'
 
