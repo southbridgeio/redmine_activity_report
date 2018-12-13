@@ -1,11 +1,11 @@
 class ActivityReportController < ApplicationController
   unloadable
 
-  before_filter :find_project
+  before_action :find_project
 
   def save_settings
     if request.put?
-      @project.activity_report_settings = params['activity_report_settings']
+      @project.activity_report_settings = params['activity_report_settings'].to_unsafe_h
 
       @project.save
 

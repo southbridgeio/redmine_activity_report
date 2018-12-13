@@ -28,7 +28,8 @@ module ActivityReport
         base.class_eval do
           unloadable
 
-          alias_method_chain :project_settings_tabs, :activity_report_settings
+          alias_method :project_settings_tabs_without_activity_report_settings, :project_settings_tabs
+          alias_method :project_settings_tabs, :project_settings_tabs_with_activity_report_settings
         end
       end
 
