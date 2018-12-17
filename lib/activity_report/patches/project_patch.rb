@@ -14,7 +14,7 @@ module ActivityReport
                 accessors: accessors
 
           accessors.each do |accessor|
-            define_method(:accessor) do
+            define_method(accessor) do
               super() || []
             end
           end
