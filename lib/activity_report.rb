@@ -21,7 +21,7 @@ module ActivityReport
       activity_group_ids = project.activity_group_ids
       activity_user_ids = project.activity_user_ids
 
-      group_users = project.groups.where(id: activity_group_ids).map(&:users).flatten
+      group_users = project.groups.select { |g| g.id.in?(activity_group_ids) }.map(&:users).flatten
       users = project.users.where(id: activity_user_ids)
 
       all_activity_user_ids = (group_users + users).uniq.map(&:id)
