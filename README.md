@@ -5,7 +5,7 @@
 
 The plugin is designed to send reports of the time spent on projects daily, weekly and monthly.
 
-Please help us make this plugin better telling us of any [issues](https://github.com/centosadmin/redmine_activity_report/issues) you'll face using it. We are ready to answer all your questions regarding this plugin.
+Please help us make this plugin better telling us of any [issues](https://github.com/southbridgeio/redmine_activity_report/issues) you'll face using it. We are ready to answer all your questions regarding this plugin.
 
 ## Requirements
 
