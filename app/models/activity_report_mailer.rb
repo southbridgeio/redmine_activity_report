@@ -8,7 +8,7 @@ class ActivityReportMailer < ActionMailer::Base
   default from: Setting.mail_from
 
   def self.default_url_options
-    Mailer.default_url_options
+    ::Mailer.default_url_options
   end
 
   def report(period, user_id, interval, params)

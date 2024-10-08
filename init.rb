@@ -1,7 +1,7 @@
 require 'redmine'
-require_dependency 'activity_report'
-require_dependency 'activity_report/patches/project_patch'
-require_dependency 'activity_report/patches/projects_helper_patch'
+require_dependency  File.dirname(__FILE__) + '/lib/activity_report'
+require_dependency  File.dirname(__FILE__) + '/lib/activity_report/patches/project_patch'
+require_dependency  File.dirname(__FILE__) + '/lib/activity_report/patches/projects_helper_patch'
 
 Redmine::Plugin.register :redmine_activity_report do
   name 'Redmine Activity Report plugin'
