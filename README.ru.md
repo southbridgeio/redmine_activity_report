@@ -1,7 +1,8 @@
 [![Rate at redmine.org](http://img.shields.io/badge/rate%20at-redmine.org-blue.svg?style=flat)](http://www.redmine.org/plugins/redmine_activity_report)
+
 # Redmine activity report plugin
 
-*[English version](README.md)*
+_[English version](README.md)_
 
 Плагин предназначен для отправки ежедневных, еженедельных и ежемесячных отчётов о затраченном времени по проектам.
 
@@ -9,19 +10,7 @@
 
 ## Требования
 
-Необходимо установить гем `whenever` локально или глобально.
-
-Добавьте следующую строку в файл Gemfile.local:
-
-```
-gem 'whenever'
-```
-
-либо установите гем глобально:
-
-```
-gem install whenever
-```
+Гем `whenever` будет установлен в процессе инсталяции плагина.
 
 ## Установка и настройка плагина
 
