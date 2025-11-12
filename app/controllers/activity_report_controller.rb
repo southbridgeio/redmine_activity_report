@@ -1,6 +1,4 @@
 class ActivityReportController < ApplicationController
-  unloadable
-
   before_action :find_project
 
   def save_settings

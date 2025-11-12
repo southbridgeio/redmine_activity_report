@@ -7,8 +7,6 @@ module ActivityReport
         base.send(:include, InstanceMethods)
 
         base.class_eval do
-          unloadable
-
           accessors = %w(with_subprojects activity_group_ids activity_user_ids report_user_ids)
           store :activity_report_settings,
                 accessors: accessors
