@@ -14,7 +14,7 @@
   <%= label_tag 'settings[time_for_reaction]', t('activity_report.settings.time_for_reaction') %>
   <%= number_field_tag 'settings[time_for_reaction]',
                        @settings.try(:[], 'time_for_reaction'),
-                       id: 'settings_time_for_reaction', style: 'width: 40px;'
+                       id: 'settings_time_for_reaction', style: 'width: 50px;'
   %>
   <%= t('activity_report.settings.minutes') %>
 </p>

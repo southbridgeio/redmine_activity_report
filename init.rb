@@ -7,7 +7,7 @@ Redmine::Plugin.register :redmine_activity_report do
   name 'Redmine Activity Report plugin'
   url 'https://github.com/southbridgeio/redmine_activity_report'
   description 'This is a plugin for Redmine which generate time reports for projects'
-  version '1.2.11'
+  version '1.2.12'
   author 'Southbridge'
   author_url 'https://github.com/southbridgeio'
 

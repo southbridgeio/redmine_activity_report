@@ -26,8 +26,6 @@ module ActivityReport
         base.send(:include, InstanceMethods)
 
         base.class_eval do
-          unloadable
-
           alias_method :project_settings_tabs_without_activity_report_settings, :project_settings_tabs
           alias_method :project_settings_tabs, :project_settings_tabs_with_activity_report_settings
         end
